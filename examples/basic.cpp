@@ -4,7 +4,7 @@
 
 int main() {
     tcon::config test;
-    tcon::loadFile(test, "test.txt");
+    tcon::loadFile(test, "example.tcon");
     std::cout << tcon::readValue(test, "world");
     return 0;
 }
