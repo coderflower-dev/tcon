@@ -1,5 +1,5 @@
 #include <iostream>
-#include "config.h"
+#include <tcon.h>
 
 
 int main() {
