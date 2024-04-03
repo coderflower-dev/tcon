@@ -43,12 +43,14 @@ namespace tcon
     
     struct config
     {
+        std::string filename;
         std::string filecontents;
         std::map<std::string, std::string> object;
     };
 
     void loadFile(config& configFile, const std::string& filePath) {
         configFile.filecontents = fileread(filePath);
+        configFile.filename = filePath;
         std::vector<std::string> lines = split(configFile.filecontents, '\n');
         for (const auto& element : lines) {
             auto parse = split(element, '=');
@@ -58,8 +60,23 @@ namespace tcon
         }
     }
 
-    std::string readValue(tcon::config configFile, std::string name)
-    {
+    //Returns the value of from the name
+    std::string readValue(tcon::config configFile, std::string name) {
         return configFile.object[name];
+    }
+
+    //Changes a value (stored in ram. please use updateFile to write the changes)
+    void changeValue(tcon::config& configFile, const std::string& name, const std::string& value) {
+        configFile.object[name] = value;
+    }
+
+    void updateFile(tcon::config configFile)
+    {
+        std::ofstream output(configFile.filename);
+        //Loops through the entire object map
+        for(const auto &pair : configFile.object)
+        {
+            output << pair.first << "=" << pair.second << "\n";
+        }
     }
 }
